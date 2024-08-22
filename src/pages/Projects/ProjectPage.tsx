@@ -55,42 +55,42 @@ const ProjectsPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = React.useCallback(async (values: { name: string; description: string }) => {
-    if (isSubmitting) return; // Prevent submission if already submitting
-    setIsSubmitting(true); // Set submitting state to true
-  
-    try {
-      if (editingProject) {
-        // Update existing project
-        await axios.put(`http://localhost:5000/api/projects/${editingProject.id}`, values, {
-          headers: {
-            'Authorization': `Bearer ${token}`, // Include the bearer token
-          },
-        });
-        const updatedProjects = projects.map(p => p.id === editingProject.id ? {
-          ...p, 
-          name: values.name, 
-          description: values.description
-        } : p);
-        setProjects(updatedProjects);
-      } else {
-        // Add new project
-        const response = await axios.post('http://localhost:5000/api/projects', values, {
-          headers: {
-            'Authorization': `Bearer ${token}`, // Include the bearer token
-          },
-        });
-        const newProject: Project = response.data;
-        setProjects([...projects, newProject]);
-      }
-    } catch (error) {
-      console.error('Error submitting project:', error);
-    } finally {
-      setIsModalOpen(false); // Close the modal after submission
-      setIsSubmitting(false); // Reset submitting state
+const handleSubmit = React.useCallback(async (values: { name: string; description: string }) => {
+  if (isSubmitting) return; // Prevent submission if already submitting
+  setIsSubmitting(true); // Set submitting state to true
+
+  try {
+    if (editingProject) {
+      // Update existing project
+      await axios.put(`http://localhost:5000/api/projects/${editingProject.id}`, values, {
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the bearer token
+        },
+      });
+      const updatedProjects = projects.map(p => p.id === editingProject.id ? {
+        ...p, 
+        name: values.name, 
+        description: values.description
+      } : p);
+      setProjects(updatedProjects);
+    } else {
+      // Add new project
+      const response = await axios.post('http://localhost:5000/api/projects', values, {
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the bearer token
+        },
+      });
+      const newProject: Project = response.data;
+      setProjects([...projects, newProject]);
     }
-  }, [isSubmitting, editingProject, projects, token]);
-  
+  } catch (error) {
+    console.error('Error submitting project:', error);
+  } finally {
+    setIsModalOpen(false); // Close the modal after submission
+    setIsSubmitting(false); // Reset submitting state
+  }
+}, [isSubmitting, editingProject, projects, token]);
+
 
   return (
     <div className="p-6">

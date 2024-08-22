@@ -6,11 +6,17 @@ export interface Project {
     description: string;
   }
   
+  // Example: types.ts or a similar file
   export interface Task {
     id: string;
     name: string;
     description: string;
-    projectId: string; // Link to the project it belongs to
+    projectId: string;
+    status: 'Open' | 'In Development' | 'Testing' | 'Completed' | 'Closed'; // Add status here
+    assignedTo?: number; // Optional if not always returned
+
   }
+  
+
 
   

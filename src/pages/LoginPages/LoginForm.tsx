@@ -36,6 +36,7 @@ const LoginForm: React.FC = () => {
         const { accessToken } = response.data;
         // Save token to localStorage or context
         localStorage.setItem('token', accessToken);
+        localStorage.setItem('userId', response.data.user.id);
         login(accessToken);
 
         navigate('/projects'); // Redirect to projects page or wherever you want

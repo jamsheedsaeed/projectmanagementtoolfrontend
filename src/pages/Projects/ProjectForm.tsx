@@ -29,26 +29,29 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ initialValues = { name: '', d
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post(
-          'http://localhost:5000/api/projects',
-          {
-            name: values.name,
-            description: values.description,
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`, // Include the bearer token
-            },
-          }
-        );
+        // const response = await axios.post(
+        //   'http://localhost:5000/api/projects',
+        //   {
+        //     name: values.name,
+        //     description: values.description,
+        //   },
+        //   {
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       'Authorization': `Bearer ${token}`, // Include the bearer token
+        //     },
+        //   }
+        // );
 
-        // Notify user of success
-        toast.success('Project added successfully!');
+        // // Notify user of success
+        // toast.success('Project added successfully!');
 
         // Optional: Call the onSubmit prop if provided
         if (onSubmit) {
-          onSubmit(response.data); // Pass the response data to the onSubmit callback
+          onSubmit({
+            name: values.name,
+            description: values.description,
+          }); // Pass the response data to the onSubmit callback
         }
 
         // Optionally clear form fields
